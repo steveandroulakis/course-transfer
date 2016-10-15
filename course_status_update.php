@@ -21,6 +21,7 @@ if ($db)
 	// Loop through the records and update the status if need be
 	while ($row = $result->fetch_assoc())
 	{
+
     	// If there's no start date, treat it as today
         if (($row["facs_start"] == NULL) || ($row["facs_start"] == ""))
         {
@@ -33,6 +34,7 @@ if ($db)
 			// Check if today's date is in range of the open and close dates
             if (($today >= $row["facs_start"]) && ($today <= $row["facs_end"]))
             {
+                echo "set open " . $row['id'] ." ... | ";
 				// Set the status to open
 				if (!$db->query("UPDATE fabrik_courses SET course_status=\"OPEN\" WHERE id={$row['id']}"))
                 {
@@ -41,6 +43,7 @@ if ($db)
             }
             else
             {
+                echo "set close " . $row['id'] ." ... | ";
 				// Set the status to closed
                 if (!$db->query("UPDATE fabrik_courses SET course_status=\"CLOSED\" WHERE id={$row['id']}"))
                 {
